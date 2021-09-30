@@ -75,13 +75,16 @@ class HRM:
             date = datetime.today()
 
         matchMonthYearEle = None
-        html_list = self.__driver.find_element_by_css_selector("table.datatable__table tbody")
-        items = html_list.find_elements_by_tag_name("tr")
-        for item in items:
-            year = item.find_element_by_xpath("//td[3]").text
-            month = item.find_element_by_xpath("//td[4]").text
-            if int(year) == date.year + 543 and month == self.months[date.month - 1]:
-                matchMonthYearEle = item.find_element_by_xpath("//td[6]/a")
+        try:
+            html_list = self.__driver.find_element_by_css_selector("table.datatable__table tbody")
+            items = html_list.find_elements_by_tag_name("tr")
+            for item in items:
+                year = item.find_element_by_xpath("//td[3]").text
+                month = item.find_element_by_xpath("//td[4]").text
+                if int(year) == date.year + 543 and month == self.months[date.month - 1]:
+                    matchMonthYearEle = item.find_element_by_xpath("//td[6]/a")
+        except:
+            matchMonthYearEle = None
 
         if matchMonthYearEle != None:
             matchMonthYearEle.click()
